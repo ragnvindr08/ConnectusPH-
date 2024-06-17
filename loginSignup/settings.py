@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-6)xt=zud5@60vk)wkpdnuo+ch$if04bxa78xlm6yc&bwxuem2v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -128,6 +128,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
@@ -141,12 +142,17 @@ LOGOUT_REDIRECT_URL = "base:login"
 
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
-    'https://127.0.0.1',
+    'https://.vercel.app',
 ]
 
 import os
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/path/to/your/media/directory/'
-MEDIA_ROOT = '/media/'
+#MEDIA_ROOT = '/media/'
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1',
+    f"https://{os.getenv('VERCEL_URL', '.vercel.app')}",
+]

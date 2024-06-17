@@ -16,7 +16,7 @@ class Message(models.Model):
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     post = models.TextField()
-    image = models.ImageField(upload_to='post_images/', default='default_image.jpg')
+    image = models.ImageField(upload_to='images/', default="")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
