@@ -365,9 +365,9 @@ box-shadow: 2px 2px 2px 2px black;
   box-shadow: 2px 2px 2px 2px black;
   height: 100px;
   width: 100%;
-  background: linear-gradient(to right, grey, grey, lightblue,lightblue, grey);
+  background: linear-gradient(to right, #2b2b2b, #303838, grey, #2b2b2b,#2b2b2b);
   background-size: 200% 100%;
-  animation: gradient-animation 8s linear infinite;
+  animation: gradient-animation 30s linear infinite;
 }
 
 @keyframes gradient-animation {
@@ -502,7 +502,7 @@ box-shadow: 2px 2px 2px 2px black;
 </div>
 
 <div class="gradient-text">
-  <h4>Welcome, {{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h4>  <!--base.html nakakonek-->
+  <h5 style="color:white;"> <img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus">| @{{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h5>  <!--base.html nakakonek-->
 </div>
 
 

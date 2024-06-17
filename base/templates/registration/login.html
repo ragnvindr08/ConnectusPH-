@@ -1,4 +1,4 @@
-<body style=" filter: grayscale(15%); background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);">
+<body style="  background-size: cover;filter: grayscale(15%); background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);">
   <img class="logo" src="/static/css/images/logo.png" alt="Connectus">
 <style>
   
@@ -79,6 +79,7 @@
     margin-bottom:-25px;
     align-items: center;
     justify-content: center;
+   
   }
   .social-icons a {
     display: inline-block;
@@ -89,9 +90,29 @@
   .social-icons a img {
     width: 30px; /* Adjust as needed */
     height: auto;
+   
+    
   }
 
+  @media (max-width: 1520px){
+    .social-icons {
+      margin-top:20px;
+      margin-bottom:-25px;
+      align-items: center;
+      justify-content: center;
+      margin-left: 10px;
+      padding:auto;
+    }
+    .social-icons a img {
+      width: 30px; /* Adjust as needed */
+      height: auto;
+      margin-left: -10px;
+    }
+    .black-header h1{
+      
 
+  }
+}
   @media (max-width: 720px){
   
   .logo {

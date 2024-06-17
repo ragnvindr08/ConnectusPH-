@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/watanabeimperial/.local/bin/loginSignup/venv"
+VIRTUAL_ENV="/mnt/chromeos/MyFiles/Downloads/Connectus Webdev/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

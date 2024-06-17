@@ -11,7 +11,7 @@
 <style>
 
   body {
-    background-color: #1e1e1e ; /* Changed to white */
+    background-color: #1e1e1e; ; /* Changed to white */
     padding-top: 80px;
     margin: 60px;
     margin-left: 160px; /* Same as the width of the sidenav */
@@ -87,15 +87,13 @@
   left: 25%;
   margin-left: 450px;
   transform: translate(-50%, -50%);
-  background-image: url("/static/css/images/blue.jpeg");
-  color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
   font-family: Impact, sans-serif;
   font-size: 24px; /* Adjust font size as needed */
-  text-transform: uppercase; /* Capitalize all letters */
   animation: animateBackground 5s linear infinite; /* Adjust animation duration as needed */
   margin-bottom: -300px
+  color:white;
 }
 
 @keyframes animateBackground {
@@ -183,7 +181,7 @@
       </ul>
       <div class="custom-control custom-switch ml-lg-2"> <!-- Added ml-lg-2 class for margin -->
         <input type="checkbox" class="custom-control-input" id="darkModeSwitch">
-        <label class="custom-control-label" for="darkModeSwitch">Light Mode</label>
+        
       </div>
       
     </div>
@@ -200,11 +198,12 @@
   
       <div class="message">    
         <div class="gradient-text">
-          <h4>Welcome, {{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h4>  <!--base.html nakakonek-->
+          <h4 style="color:white;"><img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus">| @{{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h4>  <!--base.html nakakonek-->
+        <hr style="background-color:grey;">
         </div>
 
 <div class="bgm">
-<h1 style="margin-top:-500px;">Send Message</h1>
+<h4 style="margin-top:-470px;">Send Message</h4>
     {% if messages %}
       <ul>
         {% for message in messages %}
@@ -213,7 +212,7 @@
        </ul>
     {% endif %}
 
-    <h2>Received Messages</h2>
+    <h3>Received Messages</h3>
     <div class="card card-body" style="overflow: auto; max-height: 400px;">
       {% if received_messages %}
       <ul>

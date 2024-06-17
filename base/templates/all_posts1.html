@@ -71,7 +71,7 @@
     }
     
     .posts{
-        background: linear-gradient(90deg, rgba(114,121,125,0.4780287114845938) 8%, rgba(170,101,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);
+        background: linear-gradient(to top,black, black, #303838);
         margin: 10px 0; /* Adjust margin to separate list items */
         padding: 10px;
         border-radius: 15px;
@@ -148,7 +148,13 @@
   .container {
     margin-top:30%;
   }
-     
+
+  .imgbg{
+    background:#2b2b2b;
+    padding:15px;
+    border-radius: 10px;  
+    box-shadow: 1px 1px 1px 1px black;
+  } 
 </style>    
 <body>
     
@@ -160,11 +166,15 @@
         {% for post in posts %}
            
                 <p style="color:#90e0ef">@{{ post.user.username }}</p>
+                <div class="imgbg">  
                 <p>{{ post.post }}</p>
+                   
                 {% if post.image %}
                     <img src="{{ post.image.url }}">
+                </div>     
                 {% endif %}
                 <p>Posted at: {{ post.created_at }}</p>
+              
                 <br>
             <hr style="background:white;">
            
