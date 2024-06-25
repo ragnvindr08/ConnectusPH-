@@ -391,12 +391,30 @@ li {
   width: 30px; /* Adjust as needed */
   height: auto;
 }
+.fixed-left {
+  position: fixed;
+  left: 23%;
+  top: 50%; /* Adjust as needed */
+  transform: translateY(-50%); /* Center vertically */
+  z-index: 1000; /* Ensure it's above other content */
+  width: 200px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+.fixed-right {
+  position: fixed;
+  right: 15%;
+  top: 48%; /* Adjust as needed */
+  transform: translateY(-50%); /* Center vertically */
+  z-index: 1000; /* Ensure it's above other content */
+  width: 200px; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+}
 </style>
   <body>
    
 <div>
-    
-    
+  <img src="https://pa1.aminoapps.com/6804/f387930e2154937e548efdcac25c12e5a938950a_00.gif" alt="Running Robot" class="fixed-right">  
+  <img src="https://opengameart.org/sites/default/files/robot-run.gif" alt="Running Robot" class="fixed-left">  
   <div class="container">
     <h2>Connect Us Developers</h2>
     <ul>

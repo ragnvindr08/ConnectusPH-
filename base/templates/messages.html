@@ -239,11 +239,13 @@
   <form method="post">
     {% csrf_token %}
     <div><label for="receiver">To: Username</label><img style="width:15px; height;15px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"></div>
-    <input type="text" name="receiver" id="receiver" value=""> <br>
+    <input style="background-color:#2b2b2b; color:white; border-radius:5px;" type="text" name="receiver" placeholder="users...." id="receiver" value=""> <br>
     <label for="content">Message:</label>
-    <textarea name="content" id="content"></textarea>
+    <textarea style="background-color:#2b2b2b; color:white; border-radius:5px;" name="content" id="content"></textarea>
     <br>
-    <button style="background: linear-gradient(90deg, rgba(98,172,214,0.7609418767507002) 8%, rgba(101,146,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);" type="submit">Send</button>
+    <button style="background: linear-gradient(90deg, rgba(98,172,214,0.7609418767507002) 8%, rgba(101,146,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);" type="submit">Send <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+      <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+    </svg></button>
     
     <img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus">
   </form>

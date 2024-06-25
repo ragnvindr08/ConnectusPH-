@@ -12,50 +12,7 @@
 <body>
 
   <style>
-    .search-bar {
-      position: absolute;
-      top: 94%; /* Adjust the top position as needed */
-      left: 33%;
-      transform: translateX(-50%);
-      background-color: #2b2b2b;
-      padding: 10px 5px ; /* Long padding on left and right */
-      width: 100%;
-      max-width: 550px; /* Limiting the maximum width */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      z-index: 999; /* Ensure the search bar is above other content */
-      display: flex; /* Enable flexbox */
-      align-items: center; /* Center vertically */
-      justify-content: space-between; /* Distribute items evenly */
-      border-radius: 5px;
-      margin-left:3px;
-      
-    
-  }
-
-  /* Styles for the input */
-  .search-bar input[type="text"] {
-      flex: 1; /* Take remaining space */
-      padding: 3px;
-      border: none;
-      border-radius: 5px;
-      outline: none;
-
-  }
-
-  /* Styles for the button */
-  .search-bar button {
-      width: 80px;
-      height: 40px;
-      border: none;
-      border-radius: 5px;
-      background-color: black;
-      color: #fff;
-      cursor: pointer;
-      font-size:70%;
-     
-    
-  }
-
+   
   .slideshow-container {
     max-width: 1280px;
     position: relative;
@@ -328,14 +285,65 @@ box-shadow: 2px 2px 2px 2px black;
  
 }
 }
+
+.search-bar {
+  position: fixed;
+  top: 80px; /* Adjust as needed */
+  display: flex;
+  align-items: center;
+  background-color: #2b2b2b; /* Optional background color for the search bar */
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for a better look */
+  border-radius: 5px; /* Optional rounded corners */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transition for animation */
+}
+
+.search-bar.hidden {
+  transform: translateY(-100%); /* Move out of view */
+  opacity: 0; /* Fade out */
+}
+
+.search-bar img {
+  height: 37px;
+  margin-right: 10px; /* Space between the image and input */
+}
+
+.search-bar form {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 5px;
+  font-size: 16px;
+  margin-right: 10px; /* Space between input and button */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-bar button {
+  padding: 5px 10px;
+  font-size: 16px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #0056b3;
+}
 </style>
   <body>
-   
-<div>
-    <div class="search-bar"><img style="width:auto; height:37px;" src="/static/css/images/logo.png" alt="Connectus">
-      <input type="text" placeholder="Search News...">
-      <button type="submit">Search</button>
+    <div class="search-bar" id="searchBar">
+      <img src="/static/css/images/logo.png" alt="Connectus">
+      <form id="searchForm">
+          <input type="text" id="searchInput" placeholder="Search Users...">
+          <button type="submit">Search</button>
+      </form>
   </div>
+   
     <div style="background-color: #2b2b2b;" class="slideshow-container">
       <div class="slide">
         <h5 style="color: white; margin-left: 10px;">ConnectUs Progress Development</h5>
@@ -430,7 +438,7 @@ box-shadow: 2px 2px 2px 2px black;
             <div class="container">
               <div class="section">
                 <div class="row">
-                <h2>Community<h2>
+                <h2 style="margin-top: 50%;">Community<h2>
                   <div class="col">
                   <h5> On ConnectUs, we're building more than just a social network; we're nurturing a dynamic online community where individuals can create meaningful connections based on shared interests, values, and experiences. Our platform empowers users to engage in open dialogue, collaborate on projects, support one another in achieving common goals, and yes, make friends along the way. From local events and volunteer opportunities to lively discussions and resource sharing, ConnectUs is the digital gathering place where community bonds are strengthened, ideas are sparked, and positive change takes root. Join us and be a part of something bigger—where every connection matters.
                   </h5><br>   
@@ -483,6 +491,40 @@ box-shadow: 2px 2px 2px 2px black;
   </div>
 </div>
 </div>
+<script>
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the traditional way
+      const query = document.getElementById('searchInput').value;
+      const searchUrl = `http://127.0.0.1:8000/user/${query}`;
+
+      // Function to check if the URL exists
+      fetch(searchUrl, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        // If the response is OK, redirect to the search URL
+                        window.location.href = searchUrl;
+                    } else {
+                        // If the response is not OK, alert the user
+                        alert('User not found');
+                    }
+                })
+                .catch(() => {
+                    // In case of an error (e.g., network issues), alert the user
+                    alert('An error occurred.');
+                });
+        });
+
+  let lastScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const searchBar = document.getElementById('searchBar');
+            if (window.scrollY > lastScrollY) {
+                searchBar.classList.add('hidden');
+            } else {
+                searchBar.classList.remove('hidden');
+            }
+            lastScrollY = window.scrollY;
+        });
+</script>
 <script>
   if (window.innerWidth > 768) {
     showAlert();

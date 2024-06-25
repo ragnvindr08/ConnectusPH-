@@ -9,6 +9,9 @@ from django.contrib import messages  # For flash messages
 from .models import Message
 from .forms import PostForm
 from .models import Post
+from django.http import HttpResponseForbidden
+from .forms import PostForm
+from django.http import JsonResponse
 
 
 @login_required
@@ -98,15 +101,13 @@ def messages_home(request):
 @login_required
 def create_post(request):
     if request.method == 'POST':
-        # Handle form submission (create post)
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
-            new_post.user = request.user  # Set the user before saving
+            new_post.user = request.user
             new_post.save()
-            form = PostForm()  # Clear the form after successful submission
+            form = PostForm()
     else:
-        # Handle GET request (display form and user posts)
         form = PostForm()
 
     # Handle POST request to delete a post
@@ -115,14 +116,33 @@ def create_post(request):
         post_to_delete = get_object_or_404(Post, id=post_id)
         if post_to_delete.user == request.user:
             post_to_delete.delete()
-            return redirect('/create_post/')  # Redirect to the same page after deletion
+            return redirect('/create_post/')
         else:
-            # Handle the case where user tries to delete someone else's post
             return HttpResponseForbidden("You don't have permission to delete this post.")
 
-    # Retrieve all posts created by the logged-in user
     user_posts = Post.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'post_form.html', {'form': form, 'user_posts': user_posts})
+
+@login_required
+def react_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        post.add_reaction(request.user)
+
+        # Update context variables with refreshed data
+        user_posts = Post.objects.filter(user=request.user).order_by('-created_at')
+        context = {
+            'form': PostForm(),  # Assuming you have a PostForm defined
+            'user_posts': user_posts,
+            'success_message': 'Post reacted successfully!'
+        }
+
+        # Return the updated template with the refreshed data
+
+    # If request is not POST, redirect to referer or a default URL
+    return redirect(request.META.get('HTTP_REFERER', '/'))
+
 
 def user_posts(request, username):
     user = User.objects.get(username=username)
@@ -150,6 +170,8 @@ def timelinehome(request):
     context = {
         'posts': posts,
     }
-    return render(request, 'all_posts1.html', context)     
+    return render(request, 'all_posts1.html', context)   
+
+  
 
 

@@ -6,6 +6,8 @@ from . import views
 from .views import messages_view
 from .views import messages_home
 
+app_name = 'posts'
+
 urlpatterns = [
     path("home/", home, name="home"),
     path("", home, name="home"),
@@ -20,5 +22,6 @@ urlpatterns = [
     path('user/<str:username>/', views.user_posts, name='user_posts'),
     path('timeline/', views.timeline, name='timeline'),
     path('timeline-home/', views.timelinehome, name='timelinehome'),
+    path('react_post/<int:post_id>/', views.react_post, name='react_post'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,6 +3,7 @@
 <head>
     <title>All Posts</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <style>
@@ -155,31 +156,117 @@
     border-radius: 10px;  
     box-shadow: 1px 1px 1px 1px black;
   } 
+  .like-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0; /* Remove default padding */
+}
+
+.like-button .like-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+    font-size: inherit;
+    text-decoration: none; /* Remove underline */
+    display: flex;
+    align-items: center;
+}
+
+.like-button .like-toggle:hover {
+    color: #dc3545;
+}
+
+.like-button svg {
+    width: 16px; /* Adjust width of SVG icon */
+    height: 16px; /* Adjust height of SVG icon */
+    margin-right: 5px;
+    pointer-events: none; /* Prevents SVG from blocking clicks */
+}
+
+.like-button .like-count {
+    font-size: 14px; /* Adjust font size of like count */
+    margin-right: 10px;
+}
+.liked-users {
+  color:white;
+  background-color: #404040;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  max-height: 200px; /* Example max height; adjust as needed */
+  overflow-y: auto; /* Enable vertical scroll if content overflows */
+}
+
+.liked-users p {
+  margin: 5px 0;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Show ellipsis (...) for overflow text */
+}
+
+.liked-users p span {
+  white-space: normal; /* Allow text to wrap */
+}
+ 
 </style>    
 <body>
     
 
     
 
-        <div class="posts">
-          <h5 style="color: white;">Timeline</h5>
-        {% for post in posts %}
-           
-                <p style="color:#90e0ef">@{{ post.user.username }}</p>
-                <div class="imgbg">  
-                <p>{{ post.post }}</p>
-                   
-                {% if post.image %}
-                    <img src="{{ post.image.url }}">
-                </div>     
-                {% endif %}
-                <p>Posted at: {{ post.created_at }}</p>
-              
-                <br>
-            <hr style="background:white;">
-           
-        {% endfor %}
-  
+  <div class="posts">
+    <h5 style="color: white;">Timeline</h5>
+    {% for post in posts %}
+    <div class="post">
+        <p style="color:#90e0ef">@{{ post.user.username }}</p>
+        
+        <div class="imgbg">
+            <p>{{ post.post }}</p>
+            {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image">
+            {% endif %}
+        </div>
+        <div class="liked-users" id="liked-users-{{ post.id }}" style="max-height: 150px; overflow: auto;">
+          <p><form method="post" action="/react_post/{{ post.id }}/" class="like-button">
+                {% csrf_token %}
+                <button type="submit" class="like-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.920 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+                    </svg>
+                    <span class="like-count">{{ post.count_likes }}</span>
+                </button>
+            </form>
+              {% for user in post.get_likes %}
+                  <a href="#" onclick="navigateToProfile('{{ user.username }}');" style="color:#90e0ef; cursor: pointer; font-size: 70%;">
+                      {{ user.username }}
+                  </a>{% if not forloop.last %}, {% endif %}
+              {% endfor %}
+          </p>
+      </div>
+      
+        <p>Posted at: {{ post.created_at }}</p>
+        
+        <!-- Display like count -->
+        
+        
+        <hr style="background:white;">
+    </div>
+    {% endfor %}
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Toggle liked users list on button click
+        $('.toggle-liked-users').on('click', function() {
+            var postId = $(this).data('post-id');
+            $('#liked-users-' + postId).slideToggle();
+        });
+    });
+</script>
+
   <!--
             <div class="message-container">
               <div class="message-toggle" onclick="toggleMessage()"><img style="width:auto; height:50px;" src="/static/css/images/message.png">
@@ -200,6 +287,19 @@
 -->
 
 </body>
+
+<script>
+  function navigateToProfile(username) {
+      // Construct the URL
+      var url = 'http://127.0.0.1:8000/user/' + encodeURIComponent(username);
+      
+      // Navigate within the iframe
+      window.parent.location.href = url;
+      
+      // Prevent default action (optional, but recommended)
+      return false;
+  }
+</script>
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

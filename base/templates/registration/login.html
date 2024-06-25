@@ -139,10 +139,55 @@
     width: auto;
     height: 45px;
   }
-  )
+}
+.fixed-left {
+  position: fixed;
+  z-index: 1000;
+  width: 100px;
+  height: auto;
+}
+
+.fixed-right {
+  position: fixed;
+  z-index: 1000;
+  width: 100px;
+  height: auto;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black background */
+  z-index: 2000; /* higher than the fixed elements */
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: #2b2b2b; /* dark gray background color */
+  color: white; /* white text color */
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* slight shadow for depth */
+}
+
+.modal p {
+  font-size: 18px;
+  margin: 0;
+}
+.modal img{
+  width:150px;
+  height:auto;
+}
 </style>
+    <img src="https://pa1.aminoapps.com/6804/f387930e2154937e548efdcac25c12e5a938950a_00.gif" alt="Running Robot" class="fixed-right">  
+    <img src="https://opengameart.org/sites/default/files/robot-run.gif" alt="Running Robot" class="fixed-left">  
   <body>
-   
+    
     <div style="background: linear-gradient(to right, #5f2c82, #49a09d);" class="slideshow-container">
       
       <div class="slide">
@@ -160,6 +205,16 @@
         <img src="/static/css/images/slide3.png" alt="Slide 3">
       </div>
     </div>
+    <div class="overlay" id="overlay">
+      <div class="modal">
+          <p>🎉Congratulations!!🎉</p>
+          <p>Yoshi and Megu AI</p>
+          <p>Met each other</p>
+          <img src="https://opengameart.org/sites/default/files/robot-run.gif" alt="Running Robot">
+          <img src="https://pa1.aminoapps.com/6804/f387930e2154937e548efdcac25c12e5a938950a_00.gif" alt="Running Robot">  
+            
+      </div>
+  </div>
     
 
     <body>
@@ -183,6 +238,66 @@
           slides[slideIndex-1].style.display = "block";
           setTimeout(showSlides, 4000); // Change image every 2 seconds
         }
+
+        let leftInterval, rightInterval;
+
+        // Function to generate random position values for left, right, and top positions
+        function getRandomPosition() {
+            const left = Math.random() * (window.innerWidth - 100); // Adjust 100 to half the width of the element
+            const right = Math.random() * (window.innerWidth - 100); // Adjust 100 to half the width of the element
+            const top = Math.random() * (window.innerHeight - 100); // Adjust 100 to half the height of the element
+            return { left, right, top };
+        }
+        
+        // Function to check if the elements meet and trigger alert
+        function checkMeet() {
+            const leftRect = document.querySelector('.fixed-left').getBoundingClientRect();
+            const rightRect = document.querySelector('.fixed-right').getBoundingClientRect();
+        
+            // Check if the elements intersect
+            if (!(leftRect.right < rightRect.left ||
+                  leftRect.left > rightRect.right ||
+                  leftRect.bottom < rightRect.top ||
+                  leftRect.top > rightRect.bottom)) {
+                // Show overlay with "Nice to meet you!" message
+                document.getElementById('overlay').style.display = 'flex';
+        
+                // Clear the intervals
+                clearInterval(leftInterval);
+                clearInterval(rightInterval);
+        
+                // Restart intervals after 2 seconds (adjust as needed)
+                setTimeout(() => {
+                    leftInterval = setInterval(updateLeftPosition, 3000);
+                    rightInterval = setInterval(updateRightPosition, 3000);
+                    document.getElementById('overlay').style.display = 'none'; // Hide the overlay
+                }, 7000); // Restart after 2 seconds (adjust as needed)
+            }
+        }
+        
+        // Function to update positions for .fixed-left element
+        function updateLeftPosition() {
+            const { left, top } = getRandomPosition();
+            document.querySelector('.fixed-left').style.left = `${left}px`;
+            document.querySelector('.fixed-left').style.top = `${top}px`;
+            checkMeet();
+        }
+        
+        // Function to update positions for .fixed-right element
+        function updateRightPosition() {
+            const { right, top } = getRandomPosition();
+            document.querySelector('.fixed-right').style.right = `${right}px`;
+            document.querySelector('.fixed-right').style.top = `${top}px`;
+            checkMeet();
+        }
+        
+        // Call updateLeftPosition and updateRightPosition initially
+        updateLeftPosition();
+        updateRightPosition();
+        
+        // Set interval to update positions every 3 seconds (3000 milliseconds)
+        leftInterval = setInterval(updateLeftPosition, 1000);
+        rightInterval = setInterval(updateRightPosition, 1000);
       </script>
 {% extends "base.html" %}
 {% block content %}

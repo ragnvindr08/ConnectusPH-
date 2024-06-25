@@ -2,26 +2,231 @@
 <html>
 <head>
     <title>User Posts</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #141414;
+        display: flex;
+        justify-content: center;
+    }
+    .sidenav {
+        margin-top:50px;
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+       }
+      
+      .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        font-size: 15px;
+        color: #818181;
+        display: block;
+      }
+      
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
 
+    .search-bar {
+        position: fixed;
+        top: 80px; /* Adjust as needed */
+        display: flex;
+        align-items: center;
+        background-color: #2b2b2b; /* Optional background color for the search bar */
+        padding: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for a better look */
+        border-radius: 5px; /* Optional rounded corners */
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Transition for animation */
+      }
+      
+      .search-bar.hidden {
+        transform: translateY(-100%); /* Move out of view */
+        opacity: 0; /* Fade out */
+      }
+      
+      .search-bar img {
+        height: 37px;
+        margin-right: 10px; /* Space between the image and input */
+      }
+      
+      .search-bar form {
+        display: flex;
+        align-items: center;
+      }
+      
+      .search-bar input {
+        padding: 5px;
+        font-size: 16px;
+        margin-right: 10px; /* Space between input and button */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      
+      .search-bar button {
+        padding: 5px 10px;
+        font-size: 16px;
+        border: none;
+        background-color: black;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      
+      .search-bar button:hover {
+        background-color: #0056b3;
+      }
+
+      .content {
+        width: 50%;
+        border-radius: 8px;
+        text-align: center; /* Center align content */
+        padding: 20px;
+         background-color: black;
+        color:white;
+        box-shadow: 2px 2px 2px 2px black;
+    }
     
-    <h1>Posts by {{ user.username }}</h1>
+    .content h1 {
+        color:#90e0ef;
+        margin-top:200px;
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    .content ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    .content li {
+        margin-bottom: 20px;
+    }
+    
+    .content p {
+        margin-bottom: 5px;
+        text-align:left;
+        margin: 10px;
+    }
+    
+    .content img {
+        max-width: 80%;
+        height: auto;
+        margin-top: 10px;
+        border-radius: 4px;
+        box-shadow: 1px 1px 1px 1px black;
+    }
+    </style>    
 
-    {% if posts %}
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <p>{{ post.post }}</p>
-                    {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="Post Image">
-                    {% endif %}
-                    <p>Created at: {{ post.created_at }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No posts found.</p>
-    {% endif %}
+    <body>
+        <div class="search-bar" id="searchBar">
+            <img src="/static/css/images/logo.png" alt="Connectus">
+            <form id="searchForm">
+                <input type="text" id="searchInput" placeholder="Search User...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div class="content">
+            <h1> <img style="margin-top:-8px;" src="/static/css/images/logo.png"width="200px"heigth="auto" alt="Connectus">| {{ user.username }}</h1>
+    
+            {% if posts %}
+                <ul>
+                    {% for post in posts %}
+                        <li>
+                            <div style="background-color: #2b2b2b; padding: 5px; border-radius: 10px;">
+                            <p>{{ post.post }}</p>
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="Post Image">
+                            {% endif %}
+                            <p>Created at: {{ post.created_at }}</p>
+                        </li>
+                    
+                        <hr style="background-color: white;">
+                    {% endfor %}
+                </ul>
+                
+            {% else %}
+                <p>No posts found.</p>
+            {% endif %}
+        </div>
+
+        <div class="sidenav"> 
+            <a href="http://127.0.0.1:8000/">Home</a>
+            <a href="/developer/">Developers</a>
+            <a href="/timeline/">Timeline</a>
+            <a href="/community/">Community</a>
+            <a href="/messages/">Messages</a>
+            <a href="/create_post/">Post Timeline</a> 
+          </div> 
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    
+        <a  class="navbar-brand" href=""><img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> <!-- Added justify-content-end class -->
+          <ul style="font-size:15px;" class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="http://127.0.0.1:8000/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/registrations/signup.html">Sign Up</a>
+            </li>
+          </ul>
+          
+          
+        </div>
+      </nav>
+
 </body>
 </html>
+<script>
+document.getElementById('searchForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the form from submitting the traditional way
+    const query = document.getElementById('searchInput').value;
+    const searchUrl = `http://127.0.0.1:8000/user/${query}`;
+
+    // Function to check if the URL exists
+     fetch(searchUrl, { method: 'HEAD' })
+                .then(response => {
+                    if (response.ok) {
+                        // If the response is OK, redirect to the search URL
+                        window.location.href = searchUrl;
+                    } else {
+                        // If the response is not OK, alert the user
+                        alert('User not found');
+                    }
+                })
+                .catch(() => {
+                    // In case of an error (e.g., network issues), alert the user
+                    alert('An error occurred.');
+                });
+        });
+let lastScrollY = window.scrollY;
+      window.addEventListener('scroll', () => {
+          const searchBar = document.getElementById('searchBar');
+          if (window.scrollY > lastScrollY) {
+              searchBar.classList.add('hidden');
+          } else {
+              searchBar.classList.remove('hidden');
+          }
+          lastScrollY = window.scrollY;
+      });
+</script>
+
+</body>

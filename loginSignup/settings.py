@@ -56,6 +56,14 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CSRF_COOKIE_SECURE = False
+
+# CSRF_COOKIE_HTTPONLY defaults to False. Set it to True for added security
+CSRF_COOKIE_HTTPONLY = False
+
+# CSRF_COOKIE_NAME defaults to 'csrftoken'. Change it if needed
+CSRF_COOKIE_NAME = 'csrftoken' 
+
 X_FRAME_OPTIONS = 'ALLOWALL'
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -149,6 +157,7 @@ CSRF_TRUSTED_ORIGINS = [
 import os
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+#STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #MEDIA_ROOT = '/media/'
